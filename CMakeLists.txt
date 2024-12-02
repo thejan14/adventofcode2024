@@ -12,3 +12,4 @@ target_include_directories(aoc INTERFACE "lib")
 
 # Include sub-projects.
 add_subdirectory ("day01")
+add_subdirectory ("day02")
