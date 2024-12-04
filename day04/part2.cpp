@@ -6,7 +6,7 @@
 
 #include "aoc.h"
 
-std::vector<std::vector<char>> map;
+std::vector<std::string_view> map;
 
 bool checkPair(char const a, char const b)
 {
@@ -29,12 +29,11 @@ int main()
     const auto execStart = std::chrono::high_resolution_clock::now();
 
     /* begin solution */
-
-    for (auto const line : input | std::views::split('\n'))
-    {
-        auto const row = std::string_view{ line };
-        map.emplace_back(row.begin(), row.end());
-    }
+    
+    map = input
+        | std::views::split('\n')
+        | std::views::transform([](auto const& line) { return std::string_view(line); })
+        | std::ranges::to<std::vector>();
 
     auto answer = 0;
     for (auto y = 1ULL; y < map.size() - 1; y++)

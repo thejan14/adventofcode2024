@@ -6,13 +6,13 @@
 
 #include "aoc.h"
 
-constexpr std::array<char, 4> term{ 'X', 'M', 'A', 'S' };
+constexpr std::string_view term{ "XMAS" };
 constexpr std::array<std::pair<int, int>, 8> directions
 {
     { {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1} }
 };
 
-std::vector<std::vector<char>> map;
+std::vector<std::string_view> map;
 
 // (sx, sy) => start position
 // (dx, dy) => direction vector
@@ -47,11 +47,10 @@ int main()
 
     /* begin solution */
 
-    for (auto const line : input | std::views::split('\n'))
-    {
-        auto const row = std::string_view{ line };
-        map.emplace_back(row.begin(), row.end());
-    }
+    map = input
+        | std::views::split('\n')
+        | std::views::transform([](auto const& line) { return std::string_view(line); })
+        | std::ranges::to<std::vector>();
 
     auto answer = 0;
     for (auto y = 0ULL; y < map.size(); y++)
